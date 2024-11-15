@@ -4,9 +4,6 @@ import matplotlib.pyplot as plt
 class Perceptron:
     def __init__(self, input_size, learning_rate=0.01, epochs=100):
         """
-        퍼셉트론 초기화
-
-        Parameters:
         - input_size: 입력 벡터의 크기
         - learning_rate: 학습률
         - epochs: 학습 반복 횟수
@@ -19,24 +16,14 @@ class Perceptron:
 
     def activation_function(self, z):
         """
-        활성화 함수: 계단 함수
-
-        Parameters:
         - z: 가중합 (스칼라 또는 벡터)
-
-        Returns:
         - 출력값 (0 또는 1)
         """
         return np.where(z >= 0, 1, 0)
 
     def predict(self, X):
         """
-        예측 함수
-
-        Parameters:
         - X: 입력 데이터 (2차원 배열)
-
-        Returns:
         - 예측값 (0 또는 1)
         """
         z = np.dot(X, self.weights) + self.bias
@@ -44,9 +31,6 @@ class Perceptron:
 
     def fit(self, X, y):
         """
-        학습 함수
-
-        Parameters:
         - X: 입력 데이터 (2차원 배열)
         - y: 실제 출력값 (1차원 배열)
         """
@@ -72,9 +56,6 @@ class Perceptron:
 
     def plot_decision_boundary(self, X, y):
         """
-        결정 경계를 시각화하는 함수
-
-        Parameters:
         - X: 입력 데이터
         - y: 실제 출력값
         """
@@ -103,9 +84,6 @@ class Perceptron:
 
     def plot_learning_process(self, X, y):
         """
-        학습 과정에서의 결정 경계를 시각화하는 함수
-
-        Parameters:
         - X: 입력 데이터
         - y: 실제 출력값
         """
