@@ -2,63 +2,41 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Perceptron:
+
+    # 학습률과 에포크는 각각 0.01, 100으로 지정
     def __init__(self, input_size, learning_rate=0.01, epochs=100):
-        """
-        - input_size: 입력 벡터의 크기
-        - learning_rate: 학습률
-        - epochs: 학습 반복 횟수
-        """
-        self.weights = np.zeros(input_size)
+        self.weights = np.zeros(input_size) # 최초 가중치 0으로 초기화
         self.bias = 0
         self.learning_rate = learning_rate
         self.epochs = epochs
-        self.history = []  # 결정 경계의 변화를 기록
+        self.history = []
 
+    # 활성화 함수(Step function)
     def activation_function(self, z):
-        """
-        - z: 가중합 (스칼라 또는 벡터)
-        - 출력값 (0 또는 1)
-        """
         return np.where(z >= 0, 1, 0)
 
+    # 순전파
     def predict(self, X):
-        """
-        - X: 입력 데이터 (2차원 배열)
-        - 예측값 (0 또는 1)
-        """
         z = np.dot(X, self.weights) + self.bias
         return self.activation_function(z)
 
+    # 역전파
     def fit(self, X, y):
-        """
-        - X: 입력 데이터 (2차원 배열)
-        - y: 실제 출력값 (1차원 배열)
-        """
         for epoch in range(self.epochs):
-            # 가중합 계산
             z = np.dot(X, self.weights) + self.bias
-            # 예측값 계산
             y_pred = self.activation_function(z)
-            # 오차 계산
             errors = y - y_pred
-            # 가중치 업데이트 (벡터화된 연산)
             self.weights += self.learning_rate * np.dot(X.T, errors)
-            # 바이어스 업데이트 (벡터화된 연산)
             self.bias += self.learning_rate * np.sum(errors)
-            
-            # 결정 경계 기록 (가중치와 바이어스의 현재 상태)
             self.history.append((self.weights.copy(), self.bias))
-            
-            # 오차가 0인 경우 조기 종료
+
+            # 조기 종료
             if np.all(errors == 0):
                 print(f"학습이 {epoch+1}번째 에포크에서 수렴했습니다.")
                 break
 
+    # 결정경계
     def plot_decision_boundary(self, X, y):
-        """
-        - X: 입력 데이터
-        - y: 실제 출력값
-        """
         plt.figure(figsize=(10, 6))
         
         # 데이터 포인트 그리기
@@ -82,11 +60,8 @@ class Perceptron:
         plt.grid(True)
         plt.show()
 
+    # 학습중 결정경계
     def plot_learning_process(self, X, y):
-        """
-        - X: 입력 데이터
-        - y: 실제 출력값
-        """
         plt.figure(figsize=(10, 6))
 
         # 데이터 포인트 그리기
@@ -96,14 +71,13 @@ class Perceptron:
             else:
                 plt.scatter(point[0], point[1], color='blue', marker='x', label='1' if idx == 3 else "")
 
-        # 결정 경계를 그리기 위한 x_values 정의
         x_min, x_max = X[:,0].min() - 1, X[:,0].max() + 1
         x_values = np.linspace(x_min, x_max, 200)
 
-        # 각 학습 단계에서의 결정 경계 그리기 (일부만 시각화하여 복잡도 감소)
+        # 각 학습 단계에서의 결정 경계 그리기
         for i in range(0, len(self.history), max(1, len(self.history)//10)):
             weights, bias = self.history[i]
-            if weights[1] != 0:  # 분모가 0이 되지 않도록 확인
+            if weights[1] != 0:
                 y_vals = -(weights[0] * x_values + bias) / weights[1]
                 plt.plot(x_values, y_vals, color='gray', alpha=0.3)
 
@@ -118,4 +92,3 @@ class Perceptron:
         plt.title('Perceptron Learning Process')
         plt.grid(True)
         plt.show()
-
