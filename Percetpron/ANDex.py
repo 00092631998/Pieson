@@ -1,4 +1,4 @@
-# 학습 데이터: AND 게이트
+# 학습 데이터 : AND 게이트
 X = np.array([
     [0, 0],
     [0, 1],
@@ -8,7 +8,7 @@ X = np.array([
 
 y = np.array([0, 0, 0, 1])
 
-# 퍼셉트론 인스턴스 생성
+# 퍼셉트론 생성
 perceptron = Perceptron(input_size=2, learning_rate=0.1, epochs=10)
 
 # 학습
