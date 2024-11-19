@@ -1,4 +1,4 @@
-# 학습 데이터: XOR 게이트
+# 학습 데이터 : XOR 게이트
 X_xor = np.array([
     [0, 0],
     [0, 1],
@@ -8,7 +8,7 @@ X_xor = np.array([
 
 y_xor = np.array([0, 1, 1, 0])
 
-# 퍼셉트론 인스턴스 생성
+# 퍼셉트론 생성
 perceptron_xor = Perceptron(input_size=2, learning_rate=0.1, epochs=10)
 
 # 학습
